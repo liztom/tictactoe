@@ -20,6 +20,13 @@ describe("Game", function() {
       Board.isPrototypeOf(testBoard).should.equal(true);
     });
   });
+  describe("createSpace", function() {
+    it("creates space object", function() {
+      var testGame = Object.create(Game);
+      var testSpace = testGame.createSpace();
+      Space.isPrototypeOf(testSpace).should.equal(true);
+    });
+  });
 });
 
 describe("Player", function() {
@@ -71,14 +78,26 @@ describe("Space", function() {
 });
 
 describe("Board", function() {
-  it("create 9 spaces when it is initialized", function() {
-    var testBoard = Object.create(Board);
-    testBoard.a.should.eql([1, 1]);
-  });
   describe("create", function() {
     it("creates a board object", function() {
       var testBoard = Board.create(Board);
       Board.isPrototypeOf(testBoard);
-    })
-  })
+    });
+  });
+  describe("initialize", function(){
+    it("populates the board with spaces", function(){
+      var testBoard = Board.create(Board);
+      Board.initialize();
+      console.log(Space.create(1, 1));
+      console.log(Space.spaces.xCoordinate);
+      Board.spaces[0].should.eql(Space.create(1, 1));
+    });
+  });
+  describe("find", function() {
+    it("finds the object that matches those coordinates", function() {
+      var testBoard = Space.create();
+      //console.log(testBoard);
+      Board.find().should.equal(true);
+    });
+  });
 });

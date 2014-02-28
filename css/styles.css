@@ -1,0 +1,19 @@
+table, td, tr {
+  padding: 5px;
+  border: 1px solid black;
+  text-align: center;
+  width: 500px;
+  height: 150px;
+}
+
+td:hover {
+  background-color:darkgrey;
+}
+
+.col-md-6 {
+  padding-left: 10%;
+}
+
+h1 {
+  padding-left: 10%;
+}
