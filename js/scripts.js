@@ -34,10 +34,6 @@ var Space = {
     space.initialize(xCoordinate, yCoordinate); 
     return space;
   },
-  createPlayer: function() {
-    var player = Object.create(Player);
-    return player;
-  },
   initialize: function(xCoordinate, yCoordinate) {
     this.xCoordinate = xCoordinate;
     this.yCoordinate = yCoordinate;
@@ -48,9 +44,10 @@ var Space = {
 }
 
 var Board = {
+  indexOfObject: "",
   create: function() {
-    var board = Space.create(Board);
-    board.initialize;  
+    var board = Object.create(Board);
+    board.initialize();  
     return board;
   },
   initialize: function() {
@@ -60,33 +57,45 @@ var Board = {
         this.spaces.push(Space.create(x, y));
       };
     };
-  // space = {create: function, createPlayer: function, initialize: function, markBy: function} -- xCoordinate, yCoordinate --> this.spaces
   },
-  find: function() {
-    for (var x = 1; x < 4; x++) {
-      for (var y = 1; y < 4; y++) {
-        Space.create.spaces.some(function(number){
-          return number === (x,y)
-        });
-        // space.spaces.some(function(number) {
-        //   return number === (x,y)  
-        // });
-      };
+  find: function(x, y, splicedObject) {
+    var xSpaces = [];
+    var ySpaces = [];
+
+    for (var i = 0; i < this.spaces.length; i++){
+      if (this.spaces[i].xCoordinate === x) {
+        xSpaces.push(i);
+      } 
+      if (this.spaces[i].yCoordinate === y) {
+        ySpaces.push(i);
+      }    
+    }; 
+    
+    for(var i = 0; i < xSpaces.length; i++) {
+      if(xSpaces[i] === ySpaces[0] || 
+        xSpaces[i] === ySpaces[1] || 
+        xSpaces[i] === ySpaces[2]) {
+        splicedObject = this.spaces.splice(xSpaces[i], 1);
+
+        return true;
+      } 
     };
-    return false;
-  }
-} 
+    return false;   
+  }   
+}
+
+//indexOfObject = this.spaces[xSpaces[i]];
 
 
 $(document).ready(function(){  
   for(var i = 1; i < 4; i++) {
-  $("tr#one").append("<td>" + "</td>");
+  $("tr#one").append("<td id="+i+">" + "</td>");
   };
   for(var i = 4; i < 7; i++) {
-  $("tr#two").append("<td>" + "</td>");
+  $("tr#two").append("<td id=i>" + "</td>");
   };
   for(var i = 7; i < 10; i++) {
-  $("tr#three").append("<td>" + "</td>");
+  $("tr#three").append("<td id=i>" + "</td>");
   };
 });
 

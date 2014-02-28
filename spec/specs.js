@@ -60,13 +60,6 @@ describe("Space", function() {
       Space.isPrototypeOf(testSpace).should.equal(true);
     });
   });
-  describe("createPlayer", function() {
-    it("it creates a player object", function(){
-      var testSpace = Space.create(Space);
-      var testPlayer = testSpace.createPlayer();
-      Player.isPrototypeOf(testPlayer).should.equal(true);
-    });
-  });
   describe("markBy", function() {
     it("lets a player mark the space", function() {
       var testPlayer = Player.create("X");
@@ -80,24 +73,25 @@ describe("Space", function() {
 describe("Board", function() {
   describe("create", function() {
     it("creates a board object", function() {
-      var testBoard = Board.create(Board);
+      var testBoard = Board.create();
       Board.isPrototypeOf(testBoard);
     });
   });
   describe("initialize", function(){
     it("populates the board with spaces", function(){
-      var testBoard = Board.create(Board);
-      Board.initialize();
-      console.log(Space.create(1, 1));
-      console.log(Space.spaces.xCoordinate);
-      Board.spaces[0].should.eql(Space.create(1, 1));
+      var testBoard = Board.create();
+      testBoard.spaces[0].xCoordinate.should.equal(1);
     });
   });
   describe("find", function() {
-    it("finds the object that matches those coordinates", function() {
-      var testBoard = Space.create();
-      //console.log(testBoard);
-      Board.find().should.equal(true);
+    it("finds the object property that matches those coordinates", function() {
+      var testBoard = Board.create();
+      testBoard.find(1, 3).should.equal(true);
+      testBoard.find(2, 3).should.equal(true);
+    });
+    it("finds the object property that matches those coordinates", function() {
+      var testBoard = Board.create();
+      testBoard.find(3, 5).should.equal(false);
     });
   });
 });
