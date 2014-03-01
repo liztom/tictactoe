@@ -8,9 +8,10 @@ describe("Game", function() {
   describe("initialize", function() {
     it("sets the players", function() {
       var testGame = Object.create(Game);
+      //console.log(testGame.player1)
       testGame.initialize("player1", "player2");
-      testGame.player1.should.equal("player1");
-      testGame.player2.should.equal("player2");
+      testGame.player1.playerToken.should.equal("player1");
+      testGame.player2.playerToken.should.equal("player2");
     });
   });
   describe("createBoard", function() { 
@@ -27,18 +28,19 @@ describe("Game", function() {
       Space.isPrototypeOf(testSpace).should.equal(true);
     });
   });
+  describe("switchPlayer", function() {
+    it("returns which players turn it is", function() {
+      var testGame = Game.create(Game);
+      testGame.switchPlayer(1);
+      testGame.currentPlayer.should.equal(2);
+    })
+  })
 });
 
 describe("Player", function() {
-  describe("create", function() {
-    it("creates a new instance of Player", function() {
-      var testPlayer = Player.create(Player);
-      Player.isPrototypeOf(testPlayer).should.equal(true);
-    });
-  });
   describe("initialize", function() {
-    it("sets the game piece of the player", function() {
-      var testPlayer = Player.create(Player);
+    it("creates a player", function() {
+      var testPlayer = Object.create(Player);
       testPlayer.initialize("X");
       testPlayer.playerToken.should.equal("X"); 
     });
@@ -60,14 +62,11 @@ describe("Space", function() {
       Space.isPrototypeOf(testSpace).should.equal(true);
     });
   });
-  describe("markBy", function() {
-    it("lets a player mark the space", function() {
-      var testPlayer = Player.create("X");
-      var testSpace = Space.create(1, 2);
-      testSpace.markBy(testPlayer);
-      testSpace.markedBy.should.equal(testPlayer);
-    });
-  });
+});
+
+beforeEach(function() {
+  Board.player1 = [];
+  Board.player2 =[];
 });
 
 describe("Board", function() {
@@ -93,5 +92,16 @@ describe("Board", function() {
       var testBoard = Board.create();
       testBoard.find(3, 5).should.equal(false);
     });
+    it("pushes the found object into player 1's array", function() {
+      var testBoard = Board.create();
+      testBoard.find(2, 2);
+      testBoard.player1[0].xCoordinate.should.equal(2);
+    });
+    // it("pushes the found object into player 2's array", function() {
+    //   var testGame = Game.create();
+    //   testGame.switchPlayer();
+    //   testGame.board.find(3, 2);
+    //   testGame.board.player2[0].xCoordinate.should.equal(3);
+    // });
   });
 });
